@@ -1,5 +1,6 @@
 package br.com.Tramas3030.breakpoint.modules.vice.controllers;
 
+import br.com.Tramas3030.breakpoint.modules.vice.dto.ViceListResponseDTO;
 import br.com.Tramas3030.breakpoint.modules.vice.entities.ViceEntity;
 import br.com.Tramas3030.breakpoint.modules.vice.useCase.CreateViceUseCase;
 import jakarta.validation.Valid;
@@ -20,7 +21,7 @@ public class ViceController {
   @PostMapping("/")
   public ResponseEntity<Object> create(@Valid @RequestBody ViceEntity viceEntity) {
     try {
-      var result = this.createViceUseCase.execute(viceEntity);
+      ViceListResponseDTO result = this.createViceUseCase.execute(viceEntity);
       return ResponseEntity.ok().body(result);
     } catch (Exception e) {
       return ResponseEntity.badRequest().body(e.getMessage());

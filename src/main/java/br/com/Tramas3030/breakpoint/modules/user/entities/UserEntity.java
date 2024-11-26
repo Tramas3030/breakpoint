@@ -1,5 +1,6 @@
 package br.com.Tramas3030.breakpoint.modules.user.entities;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -30,10 +31,12 @@ public class UserEntity {
 
   @Column(name = "created_at")
   @CreationTimestamp
+  @JsonFormat(pattern = "dd/MM/yyyy HH:mm")
   private LocalDateTime createdAt;
 
   @Column(name = "updated_at")
   @UpdateTimestamp
+  @JsonFormat(pattern = "dd/MM/yyyy HH:mm")
   private LocalDateTime updatedAt;
 
 }

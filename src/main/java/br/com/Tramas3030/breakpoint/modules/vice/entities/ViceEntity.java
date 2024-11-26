@@ -1,6 +1,7 @@
 package br.com.Tramas3030.breakpoint.modules.vice.entities;
 
 import br.com.Tramas3030.breakpoint.modules.user.entities.UserEntity;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
@@ -30,10 +31,12 @@ public class ViceEntity {
 
   @Column(name = "created_at")
   @CreationTimestamp
+  @JsonFormat(pattern = "dd/MM/yyyy HH:mm")
   private LocalDateTime createdAt;
 
   @Column(name = "updated_at")
   @UpdateTimestamp
+  @JsonFormat(pattern = "dd/MM/yyyy HH:mm")
   private LocalDateTime updated_at;
 
   private String achievement;
