@@ -21,7 +21,7 @@ public class CreateUserUseCase {
       throw new UserFoundException();
     });
 
-    var encryptedPassword = passwordEncoder.encode(userEntity.getPassword());
+    var encryptedPassword = this.passwordEncoder.encode(userEntity.getPassword());
     userEntity.setPassword(encryptedPassword);
 
     return this.userRepository.save(userEntity);
