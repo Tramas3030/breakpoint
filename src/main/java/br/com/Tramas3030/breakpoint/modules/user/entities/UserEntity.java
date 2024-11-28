@@ -26,7 +26,6 @@ public class UserEntity {
   @Email(message = "O campo [email] deve conter um email válido")
   private String email;
 
-  @Length(min = 5, max = 30, message = "A senha deve conter entre (5) e (100) caracteres")
   private String password;
 
   @Column(name = "created_at")
