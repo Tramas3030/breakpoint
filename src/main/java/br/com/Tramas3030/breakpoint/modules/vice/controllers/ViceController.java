@@ -3,15 +3,15 @@ package br.com.Tramas3030.breakpoint.modules.vice.controllers;
 import br.com.Tramas3030.breakpoint.modules.vice.dto.ViceListResponseDTO;
 import br.com.Tramas3030.breakpoint.modules.vice.entities.ViceEntity;
 import br.com.Tramas3030.breakpoint.modules.vice.useCase.CreateViceUseCase;
+import br.com.Tramas3030.breakpoint.modules.vice.useCase.DeleteViceUseCase;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.NoSuchElementException;
 import java.util.UUID;
 
 @RestController
@@ -20,6 +20,9 @@ public class ViceController {
 
   @Autowired
   private CreateViceUseCase createViceUseCase;
+
+  @Autowired
+  private DeleteViceUseCase deleteViceUseCase;
 
   @PostMapping("/")
   public ResponseEntity<Object> create(@Valid @RequestBody ViceEntity viceEntity, HttpServletRequest request) {
@@ -31,6 +34,22 @@ public class ViceController {
       return ResponseEntity.ok().body(result);
     } catch (Exception e) {
       return ResponseEntity.badRequest().body(e.getMessage());
+    }
+  }
+
+  @DeleteMapping("/{viceId}")
+  public ResponseEntity<Object> delete(@PathVariable Long viceId, HttpServletRequest request) {
+    try {
+      var userId = request.getAttribute("user_id");
+      boolean deleted = this.deleteViceUseCase.execute(viceId, UUID.fromString(userId.toString()));
+
+      return ResponseEntity.ok().body("Addiction successfully deleted");
+    } catch (NoSuchElementException e) {
+      return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+    } catch (IllegalArgumentException e) {
+      return ResponseEntity.badRequest().body(e.getMessage());
+    } catch (Exception e) {
+      return ResponseEntity.internalServerError().body("Error when deleting addiction");
     }
   }
 }
