@@ -39,6 +39,4 @@ public class ViceEntity {
   @JsonFormat(pattern = "dd/MM/yyyy HH:mm")
   private LocalDateTime updated_at;
 
-  private String achievement;
-
 }

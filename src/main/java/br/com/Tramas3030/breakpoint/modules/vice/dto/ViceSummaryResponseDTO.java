@@ -16,5 +16,6 @@ public class ViceSummaryResponseDTO {
   private long id;
   private String title;
   private LocalDateTime createdAt;
+  private LocalDateTime updatedAt;
 
 }

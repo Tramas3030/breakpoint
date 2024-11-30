@@ -16,4 +16,7 @@ public class ViceListResponseDTO {
 
   private List<ViceSummaryResponseDTO> allUserVices;
 
+  public boolean isEmpty() {
+    return allUserVices.isEmpty();
+  }
 }
