@@ -1,6 +1,7 @@
 package br.com.Tramas3030.breakpoint.modules.diary.controllers;
 
 import br.com.Tramas3030.breakpoint.modules.diary.dto.DiaryInformationsSummaryDTO;
+import br.com.Tramas3030.breakpoint.modules.diary.dto.DiaryNotesListResponseDTO;
 import br.com.Tramas3030.breakpoint.modules.diary.entities.DiaryEntity;
 import br.com.Tramas3030.breakpoint.modules.diary.useCase.CreateNoteUseCase;
 import jakarta.servlet.http.HttpServletRequest;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -27,8 +29,8 @@ public class DiaryController {
       var userId = request.getAttribute("user_id");
       diaryEntity.setUserId(UUID.fromString(userId.toString()));
 
-      DiaryInformationsSummaryDTO result = this.createNoteUseCase.execute(diaryEntity);
-      return ResponseEntity.ok().body(result);
+      DiaryNotesListResponseDTO result = this.createNoteUseCase.execute(diaryEntity);
+      return ResponseEntity.ok().body(result.getAllUserNotes());
     } catch (Exception e) {
       return ResponseEntity.badRequest().body(e.getMessage());
     }
