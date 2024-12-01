@@ -21,7 +21,7 @@ public class ExceptionHandlerController {
   }
 
   @ExceptionHandler(MethodArgumentNotValidException.class)
-  public ResponseEntity<List<ErrorMessageDTO>> handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
+  public ResponseEntity<Object> handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
     List<ErrorMessageDTO> dto = new ArrayList<>();
 
     e.getBindingResult().getFieldErrors().forEach(error -> {
@@ -29,6 +29,10 @@ public class ExceptionHandlerController {
       ErrorMessageDTO errorMessage = new ErrorMessageDTO(message, error.getField());
       dto.add(errorMessage);
     });
+
+    if(dto.size() == 1) {
+      return new ResponseEntity<>(dto.get(0), HttpStatus.BAD_REQUEST);
+    }
 
     return new ResponseEntity<>(dto, HttpStatus.BAD_REQUEST);
   }
