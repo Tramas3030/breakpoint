@@ -67,7 +67,7 @@ public class ViceController {
       viceEntity.setUserId(UUID.fromString(userId.toString()));
 
       ViceListResponseDTO result = this.createViceUseCase.execute(viceEntity);
-      return ResponseEntity.ok().body(result);
+      return ResponseEntity.ok().body(result.getAllUserVices());
     } catch (Exception e) {
       return ResponseEntity.badRequest().body(e.getMessage());
     }
