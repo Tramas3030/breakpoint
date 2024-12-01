@@ -6,6 +6,7 @@ import br.com.Tramas3030.breakpoint.modules.diary.entities.DiaryEntity;
 import br.com.Tramas3030.breakpoint.modules.diary.useCase.CreateNoteUseCase;
 import br.com.Tramas3030.breakpoint.modules.diary.useCase.DeleteNoteUseCase;
 import br.com.Tramas3030.breakpoint.modules.diary.useCase.GetAllNotesUseCase;
+import br.com.Tramas3030.breakpoint.modules.diary.useCase.GetNoteInformationsUseCase;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,9 @@ public class DiaryController {
   private GetAllNotesUseCase getAllNotesUseCase;
 
   @Autowired
+  private GetNoteInformationsUseCase getNoteInformationsUseCase;
+
+  @Autowired
   private CreateNoteUseCase createNoteUseCase;
 
   @Autowired
@@ -41,6 +45,19 @@ public class DiaryController {
     }
 
     return ResponseEntity.ok().body(result.getAllUserNotes());
+  }
+
+  @GetMapping("/{noteId}")
+  public ResponseEntity<Object> getNoteInformations(@PathVariable Long noteId, HttpServletRequest request) {
+    var userId = request.getAttribute("user_id");
+
+    try {
+      DiaryInformationsSummaryDTO result = this.getNoteInformationsUseCase.execute(noteId, UUID.fromString(userId.toString()));
+
+      return ResponseEntity.ok().body(result);
+    } catch (Exception e) {
+      return ResponseEntity.badRequest().body(e.getMessage());
+    }
   }
 
   @PostMapping("/")
