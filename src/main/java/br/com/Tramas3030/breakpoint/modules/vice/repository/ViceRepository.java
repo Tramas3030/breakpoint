@@ -10,4 +10,5 @@ import java.util.UUID;
 public interface ViceRepository extends JpaRepository<ViceEntity, Long> {
   Optional<ViceEntity> findByTitleAndUserId(String title, UUID UserId);
   List<ViceEntity> findAllByUserId(UUID userId);
+  Optional<ViceEntity> findByIdAndUserId(Long id, UUID UserId);
 }
