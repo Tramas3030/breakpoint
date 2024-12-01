@@ -5,6 +5,7 @@ import br.com.Tramas3030.breakpoint.modules.diary.dto.DiaryNotesListResponseDTO;
 import br.com.Tramas3030.breakpoint.modules.diary.entities.DiaryEntity;
 import br.com.Tramas3030.breakpoint.modules.diary.useCase.CreateNoteUseCase;
 import br.com.Tramas3030.breakpoint.modules.diary.useCase.DeleteNoteUseCase;
+import br.com.Tramas3030.breakpoint.modules.diary.useCase.GetAllNotesUseCase;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,10 +22,26 @@ import java.util.UUID;
 public class DiaryController {
 
   @Autowired
+  private GetAllNotesUseCase getAllNotesUseCase;
+
+  @Autowired
   private CreateNoteUseCase createNoteUseCase;
 
   @Autowired
   private DeleteNoteUseCase deleteNoteUseCase;
+
+  @GetMapping("/")
+  public ResponseEntity<Object> listAllUserNotes(HttpServletRequest request) {
+    var userId = request.getAttribute("user_id");
+
+    DiaryNotesListResponseDTO result = this.getAllNotesUseCase.execute(UUID.fromString(userId.toString()));
+
+    if(result.isEmpty()) {
+      return ResponseEntity.ok().body("You do not have any registered note.");
+    }
+
+    return ResponseEntity.ok().body(result.getAllUserNotes());
+  }
 
   @PostMapping("/")
   public ResponseEntity<Object> create(@Valid @RequestBody DiaryEntity diaryEntity, HttpServletRequest request) {
