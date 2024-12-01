@@ -24,6 +24,7 @@ public class UserEntity {
   private String name;
 
   @Email(message = "O campo [email] deve conter um email válido")
+  @NotBlank(message = "O campo [email] não pode ficar em branco")
   private String email;
 
   private String password;
