@@ -1,0 +1,7 @@
+package br.com.Tramas3030.breakpoint.modules.diary.repository;
+
+import br.com.Tramas3030.breakpoint.modules.diary.entities.DiaryEntity;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface DiaryRepository extends JpaRepository<DiaryEntity, Long> {
+}
