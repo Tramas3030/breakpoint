@@ -15,13 +15,14 @@ public class SecurityConfig {
   @Autowired
   private SecurityFilter securityFilter;
 
-  private static final String[] SWAGGER_LIST = {
+  private static final String[] PERMIT_ALL_LIST = {
       "/v3/api-docs/**",
       "/v3/api-docs",
       "/swagger-ui/**",
       "/swagger-ui.html",
       "/swagger-resources/**",
-      "/webjars/**"
+      "/webjars/**",
+      "/actuator/**"
   };
 
   @Bean
@@ -30,7 +31,7 @@ public class SecurityConfig {
         .authorizeHttpRequests(auth -> {
           auth.requestMatchers("/user/").permitAll()
               .requestMatchers("/auth/user").permitAll()
-              .requestMatchers(SWAGGER_LIST).permitAll();
+              .requestMatchers(PERMIT_ALL_LIST).permitAll();
           auth.anyRequest().authenticated();
         }).addFilterBefore(securityFilter, BasicAuthenticationFilter.class);
 
