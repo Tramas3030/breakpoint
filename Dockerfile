@@ -8,7 +8,7 @@ RUN apt-get install maven -y
 RUN mvn clean install
 
 FROM openjdk:17-jdk-slim
-EXPOSE 4000
+EXPOSE 8080
 
 COPY --from=build /target/breakpoint-0.0.1.jar app.jar
 
