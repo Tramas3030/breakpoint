@@ -3,6 +3,7 @@ package br.com.Tramas3030.breakpoint.modules.user.controllers;
 import br.com.Tramas3030.breakpoint.modules.user.entities.UserEntity;
 import br.com.Tramas3030.breakpoint.modules.user.useCase.CreateUserUseCase;
 import br.com.Tramas3030.breakpoint.modules.user.useCase.GetUserInformationsUseCase;
+import br.com.Tramas3030.breakpoint.modules.user.useCase.UpdateUserInformationsUseCase;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,9 @@ public class UserController {
   @Autowired
   private GetUserInformationsUseCase getUserInformationsUseCase;
 
+  @Autowired
+  private UpdateUserInformationsUseCase updateUserInformationsUseCase;
+
   @PostMapping("/")
   public ResponseEntity<Object> create(@Valid @RequestBody UserEntity userEntity) {
     try {
@@ -37,6 +41,18 @@ public class UserController {
 
     try {
       var result = getUserInformationsUseCase.execute(UUID.fromString(userId.toString()));
+      return ResponseEntity.ok().body(result);
+    } catch (Exception e) {
+      return ResponseEntity.badRequest().body(e.getMessage());
+    }
+  }
+
+  @PutMapping("/")
+  public ResponseEntity<Object> update(HttpServletRequest request, @RequestBody UserEntity userEntity) {
+    var userId = request.getAttribute("user_id");
+
+    try {
+      var result = updateUserInformationsUseCase.execute(UUID.fromString(userId.toString()), userEntity);
       return ResponseEntity.ok().body(result);
     } catch (Exception e) {
       return ResponseEntity.badRequest().body(e.getMessage());

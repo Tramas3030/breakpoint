@@ -27,6 +27,7 @@ public class UserEntity {
   @NotBlank(message = "O campo [email] não pode ficar em branco")
   private String email;
 
+  @Length(min = 5, max = 100, message = "A senha deve conter entre (5) e (100) caracteres")
   private String password;
 
   @Column(name = "created_at")
