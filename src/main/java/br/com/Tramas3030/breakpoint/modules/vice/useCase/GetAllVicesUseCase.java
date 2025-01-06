@@ -17,7 +17,7 @@ public class GetAllVicesUseCase {
   private ViceRepository viceRepository;
 
   public ViceListResponseDTO execute(UUID userId) {
-    List<ViceEntity> allUserVices = this.viceRepository.findAllByUserId(userId);
+    List<ViceEntity> allUserVices = this.viceRepository.findAllByUserIdOrderById(userId);
 
     List<ViceSummaryResponseDTO> viceSummaryList = allUserVices.stream()
         .map(vice -> ViceSummaryResponseDTO.builder()

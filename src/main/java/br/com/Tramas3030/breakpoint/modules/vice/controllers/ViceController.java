@@ -2,11 +2,9 @@ package br.com.Tramas3030.breakpoint.modules.vice.controllers;
 
 import br.com.Tramas3030.breakpoint.modules.vice.dto.ViceListResponseDTO;
 import br.com.Tramas3030.breakpoint.modules.vice.dto.ViceSummaryResponseDTO;
+import br.com.Tramas3030.breakpoint.modules.vice.dto.ViceUpdatedAt;
 import br.com.Tramas3030.breakpoint.modules.vice.entities.ViceEntity;
-import br.com.Tramas3030.breakpoint.modules.vice.useCase.CreateViceUseCase;
-import br.com.Tramas3030.breakpoint.modules.vice.useCase.DeleteViceUseCase;
-import br.com.Tramas3030.breakpoint.modules.vice.useCase.GetAllVicesUseCase;
-import br.com.Tramas3030.breakpoint.modules.vice.useCase.GetViceInformationsUseCase;
+import br.com.Tramas3030.breakpoint.modules.vice.useCase.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +32,9 @@ public class ViceController {
   @Autowired
   private DeleteViceUseCase deleteViceUseCase;
 
+  @Autowired
+  private ResetViceTimerUseCase resetViceTimerUseCase;
+
   @GetMapping("/")
   public ResponseEntity<Object> listAllUserVices(HttpServletRequest request) {
     var userId = request.getAttribute("user_id");
@@ -53,6 +54,19 @@ public class ViceController {
 
     try {
       ViceSummaryResponseDTO result = this.getViceInformationsUseCase.execute(viceId, UUID.fromString(userId.toString()));
+
+      return ResponseEntity.ok().body(result);
+    } catch (Exception e) {
+      return ResponseEntity.badRequest().body(e.getMessage());
+    }
+  }
+
+  @PutMapping("/{viceId}")
+  public ResponseEntity<Object> resetViceTimer(@PathVariable Long viceId, HttpServletRequest request) {
+    var userId = request.getAttribute("user_id");
+
+    try {
+      ViceUpdatedAt result = this.resetViceTimerUseCase.execute(viceId, UUID.fromString(userId.toString()));
 
       return ResponseEntity.ok().body(result);
     } catch (Exception e) {
