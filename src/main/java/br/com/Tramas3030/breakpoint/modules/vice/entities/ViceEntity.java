@@ -9,6 +9,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @Data
@@ -21,6 +22,20 @@ public class ViceEntity {
 
   @NotBlank(message = "O campo [title] não pode ser vazio")
   private String title;
+
+  @NotBlank
+  private String description;
+
+  @Column(name = "addiction_impact")
+  @NotBlank
+  private String addictionImpact;
+
+  @Column(name = "impact_cost")
+  private String impactCost;
+
+  @ElementCollection
+  @Column(name = "critical_hours")
+  private List<String> criticalHours;
 
   @ManyToOne()
   @JoinColumn(name = "user_id", nullable = false, insertable = false, updatable = false)

@@ -23,12 +23,16 @@ public class CreateViceUseCase {
 
     this.viceRepository.save(viceEntity);
 
-    List<ViceEntity> allUserVices = this.viceRepository.findAllByUserId(viceEntity.getUserId());
+    List<ViceEntity> allUserVices = this.viceRepository.findAllByUserIdOrderByCreatedAtDesc(viceEntity.getUserId());
 
     List<ViceSummaryResponseDTO> viceSummaryList = allUserVices.stream()
         .map(vice -> ViceSummaryResponseDTO.builder()
             .id(vice.getId())
             .title(vice.getTitle())
+            .description(vice.getDescription())
+            .addictionImpact(vice.getAddictionImpact())
+            .impactCost(vice.getImpactCost())
+            .criticalHours(vice.getCriticalHours())
             .createdAt(vice.getCreatedAt())
             .updatedAt(vice.getUpdated_at())
             .build())
