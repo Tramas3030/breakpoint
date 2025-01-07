@@ -1,5 +1,7 @@
 package br.com.Tramas3030.breakpoint.modules.user.entities;
 
+import br.com.Tramas3030.breakpoint.modules.diary.entities.DiaryEntity;
+import br.com.Tramas3030.breakpoint.modules.vice.entities.ViceEntity;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
@@ -10,6 +12,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.validator.constraints.Length;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @Data
@@ -39,5 +42,11 @@ public class UserEntity {
   @UpdateTimestamp
   @JsonFormat(pattern = "dd/MM/yyyy HH:mm")
   private LocalDateTime updatedAt;
+
+  @OneToMany(mappedBy = "userEntity", cascade = CascadeType.REMOVE, orphanRemoval = true)
+  private List<ViceEntity> vices;
+
+  @OneToMany(mappedBy = "userEntity", cascade = CascadeType.REMOVE, orphanRemoval = true)
+  private List<DiaryEntity> notes;
 
 }

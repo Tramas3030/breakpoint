@@ -2,6 +2,7 @@ package br.com.Tramas3030.breakpoint.modules.user.controllers;
 
 import br.com.Tramas3030.breakpoint.modules.user.entities.UserEntity;
 import br.com.Tramas3030.breakpoint.modules.user.useCase.CreateUserUseCase;
+import br.com.Tramas3030.breakpoint.modules.user.useCase.DeleteUserUseCase;
 import br.com.Tramas3030.breakpoint.modules.user.useCase.GetUserInformationsUseCase;
 import br.com.Tramas3030.breakpoint.modules.user.useCase.UpdateUserInformationsUseCase;
 import jakarta.servlet.http.HttpServletRequest;
@@ -24,6 +25,9 @@ public class UserController {
 
   @Autowired
   private UpdateUserInformationsUseCase updateUserInformationsUseCase;
+
+  @Autowired
+  private DeleteUserUseCase deleteUserUseCase;
 
   @PostMapping("/")
   public ResponseEntity<Object> create(@Valid @RequestBody UserEntity userEntity) {
@@ -59,4 +63,16 @@ public class UserController {
     }
   }
 
+  @DeleteMapping("/")
+  public ResponseEntity<Object> delete(HttpServletRequest request) {
+    var userId = request.getAttribute("user_id");
+
+    try {
+      boolean deleted = this.deleteUserUseCase.execute(UUID.fromString(userId.toString()));
+
+      return ResponseEntity.ok().body("User successfully deleted");
+    } catch (Exception e) {
+      return ResponseEntity.badRequest().body(e.getMessage());
+    }
+  }
 }
