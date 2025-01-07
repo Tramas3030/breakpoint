@@ -19,7 +19,7 @@ public class CreateNoteUseCase {
   public DiaryNotesListResponseDTO execute(DiaryEntity diaryEntity) {
     this.diaryRepository.save(diaryEntity);
 
-    List<DiaryEntity> allUserNotes = this.diaryRepository.findAllByUserId(diaryEntity.getUserId());
+    List<DiaryEntity> allUserNotes = this.diaryRepository.findAllByUserIdOrderByCreatedAt(diaryEntity.getUserId());
 
     List<DiaryInformationsSummaryDTO> diaryInformationsSummaryDTOList = allUserNotes.stream()
         .map(note -> DiaryInformationsSummaryDTO.builder()

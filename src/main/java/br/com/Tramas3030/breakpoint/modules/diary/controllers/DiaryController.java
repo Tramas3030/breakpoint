@@ -2,11 +2,9 @@ package br.com.Tramas3030.breakpoint.modules.diary.controllers;
 
 import br.com.Tramas3030.breakpoint.modules.diary.dto.DiaryInformationsSummaryDTO;
 import br.com.Tramas3030.breakpoint.modules.diary.dto.DiaryNotesListResponseDTO;
+import br.com.Tramas3030.breakpoint.modules.diary.dto.UpdateDiaryDTO;
 import br.com.Tramas3030.breakpoint.modules.diary.entities.DiaryEntity;
-import br.com.Tramas3030.breakpoint.modules.diary.useCase.CreateNoteUseCase;
-import br.com.Tramas3030.breakpoint.modules.diary.useCase.DeleteNoteUseCase;
-import br.com.Tramas3030.breakpoint.modules.diary.useCase.GetAllNotesUseCase;
-import br.com.Tramas3030.breakpoint.modules.diary.useCase.GetNoteInformationsUseCase;
+import br.com.Tramas3030.breakpoint.modules.diary.useCase.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +32,9 @@ public class DiaryController {
   @Autowired
   private DeleteNoteUseCase deleteNoteUseCase;
 
+  @Autowired
+  private UpdateNoteInformationsUseCase updateNoteInformationsUseCase;
+
   @GetMapping("/")
   public ResponseEntity<Object> listAllUserNotes(HttpServletRequest request) {
     var userId = request.getAttribute("user_id");
@@ -53,6 +54,19 @@ public class DiaryController {
 
     try {
       DiaryInformationsSummaryDTO result = this.getNoteInformationsUseCase.execute(noteId, UUID.fromString(userId.toString()));
+
+      return ResponseEntity.ok().body(result);
+    } catch (Exception e) {
+      return ResponseEntity.badRequest().body(e.getMessage());
+    }
+  }
+
+  @PutMapping("/{noteId}")
+  public ResponseEntity<Object> update(@PathVariable Long noteId, HttpServletRequest request, @RequestBody UpdateDiaryDTO updateDiaryDTO) {
+    var userId = request.getAttribute("user_id");
+
+    try {
+      DiaryInformationsSummaryDTO result = this.updateNoteInformationsUseCase.execute(noteId, UUID.fromString(userId.toString()), updateDiaryDTO);
 
       return ResponseEntity.ok().body(result);
     } catch (Exception e) {

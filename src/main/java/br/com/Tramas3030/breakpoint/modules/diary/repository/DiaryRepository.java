@@ -8,6 +8,6 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface DiaryRepository extends JpaRepository<DiaryEntity, Long> {
-  List<DiaryEntity> findAllByUserId(UUID userId);
+  List<DiaryEntity> findAllByUserIdOrderByCreatedAt(UUID userId);
   Optional<DiaryEntity> findByIdAndUserId(Long id, UUID UserId);
 }

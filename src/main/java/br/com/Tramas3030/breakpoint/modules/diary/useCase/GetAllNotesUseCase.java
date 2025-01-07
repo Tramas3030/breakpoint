@@ -17,7 +17,7 @@ public class GetAllNotesUseCase {
   private DiaryRepository diaryRepository;
 
   public DiaryNotesListResponseDTO execute(UUID userId) {
-    List<DiaryEntity> allUserNotes = this.diaryRepository.findAllByUserId(userId);
+    List<DiaryEntity> allUserNotes = this.diaryRepository.findAllByUserIdOrderByCreatedAt(userId);
 
     List<DiaryInformationsSummaryDTO> noteSummaryList = allUserNotes.stream()
         .map(note -> DiaryInformationsSummaryDTO.builder()
