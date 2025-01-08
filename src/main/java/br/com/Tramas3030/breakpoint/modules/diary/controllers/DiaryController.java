@@ -5,6 +5,7 @@ import br.com.Tramas3030.breakpoint.modules.diary.dto.DiaryNotesListResponseDTO;
 import br.com.Tramas3030.breakpoint.modules.diary.dto.UpdateDiaryDTO;
 import br.com.Tramas3030.breakpoint.modules.diary.entities.DiaryEntity;
 import br.com.Tramas3030.breakpoint.modules.diary.useCase.*;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/user/diary")
+@Tag(name = "Diário", description = "Rotas relacionadas as notas do diário")
 public class DiaryController {
 
   @Autowired

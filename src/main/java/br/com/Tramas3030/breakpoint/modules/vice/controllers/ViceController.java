@@ -5,6 +5,7 @@ import br.com.Tramas3030.breakpoint.modules.vice.dto.ViceSummaryResponseDTO;
 import br.com.Tramas3030.breakpoint.modules.vice.dto.ViceUpdatedAt;
 import br.com.Tramas3030.breakpoint.modules.vice.entities.ViceEntity;
 import br.com.Tramas3030.breakpoint.modules.vice.useCase.*;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/user/vice")
+@Tag(name = "Vícios", description = "Rotas relacionadas aos vícios")
 public class ViceController {
 
   @Autowired
