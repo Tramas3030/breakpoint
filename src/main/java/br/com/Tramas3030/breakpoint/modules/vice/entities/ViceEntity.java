@@ -23,11 +23,9 @@ public class ViceEntity {
   @NotBlank(message = "O campo [title] não pode ser vazio")
   private String title;
 
-  @NotBlank
   private String description;
 
   @Column(name = "addiction_impact")
-  @NotBlank
   private String addictionImpact;
 
   @Column(name = "impact_cost")

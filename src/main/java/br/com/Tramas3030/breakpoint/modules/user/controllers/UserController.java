@@ -94,13 +94,7 @@ public class UserController {
       }),
       @ApiResponse(
           responseCode = "400",
-          description = "Erros possíveis: 1) Passar um JWT Token inválido ou 2) Passar um JWT de um usuário que não existe na aplicação",
-          content = {
-              @Content(
-                  mediaType = "text/html",
-                  schema = @Schema
-              )
-          }
+          description = "Erros possíveis: 1) Passar um JWT Token inválido ou 2) Passar um JWT de um usuário que não existe na aplicação"
       )
   })
   @SecurityRequirement(name = "jwt_auth")
