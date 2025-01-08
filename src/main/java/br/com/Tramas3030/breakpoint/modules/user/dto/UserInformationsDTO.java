@@ -1,5 +1,6 @@
 package br.com.Tramas3030.breakpoint.modules.user.dto;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,7 +14,9 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class UserInformationsDTO {
 
+  @Schema(example = "Simone Simons")
   private String name;
+  @Schema(example = "simonesimons@gmail.com")
   private String email;
   private LocalDateTime createdAt;
 

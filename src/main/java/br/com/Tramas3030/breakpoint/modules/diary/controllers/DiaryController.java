@@ -5,6 +5,7 @@ import br.com.Tramas3030.breakpoint.modules.diary.dto.DiaryNotesListResponseDTO;
 import br.com.Tramas3030.breakpoint.modules.diary.dto.UpdateDiaryDTO;
 import br.com.Tramas3030.breakpoint.modules.diary.entities.DiaryEntity;
 import br.com.Tramas3030.breakpoint.modules.diary.useCase.*;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
@@ -20,6 +21,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/user/diary")
 @Tag(name = "Diário", description = "Rotas relacionadas as notas do diário")
+@SecurityRequirement(name = "jwt_auth")
 public class DiaryController {
 
   @Autowired

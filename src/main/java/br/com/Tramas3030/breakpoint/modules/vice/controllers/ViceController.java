@@ -1,10 +1,12 @@
 package br.com.Tramas3030.breakpoint.modules.vice.controllers;
 
-import br.com.Tramas3030.breakpoint.modules.vice.dto.ViceListResponseDTO;
-import br.com.Tramas3030.breakpoint.modules.vice.dto.ViceSummaryResponseDTO;
+import br.com.Tramas3030.breakpoint.modules.vice.dto.ViceResponseDTO;
+import br.com.Tramas3030.breakpoint.modules.vice.dto.ViceSummaryListResponseDTO;
+import br.com.Tramas3030.breakpoint.modules.vice.dto.ViceSummaryDTO;
 import br.com.Tramas3030.breakpoint.modules.vice.dto.ViceUpdatedAt;
 import br.com.Tramas3030.breakpoint.modules.vice.entities.ViceEntity;
 import br.com.Tramas3030.breakpoint.modules.vice.useCase.*;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
@@ -13,13 +15,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.UUID;
 
 @RestController
 @RequestMapping("/user/vice")
 @Tag(name = "Vícios", description = "Rotas relacionadas aos vícios")
+@SecurityRequirement(name = "jwt_auth")
 public class ViceController {
 
   @Autowired
@@ -41,7 +43,7 @@ public class ViceController {
   public ResponseEntity<Object> listAllUserVices(HttpServletRequest request) {
     var userId = request.getAttribute("user_id");
 
-    ViceListResponseDTO result = getAllVicesUseCase.execute(UUID.fromString(userId.toString()));
+    ViceSummaryListResponseDTO result = getAllVicesUseCase.execute(UUID.fromString(userId.toString()));
 
     if(result.isEmpty()) {
       return ResponseEntity.ok().body("You do not have any registered addiction.");
@@ -55,7 +57,7 @@ public class ViceController {
     var userId = request.getAttribute("user_id");
 
     try {
-      ViceSummaryResponseDTO result = this.getViceInformationsUseCase.execute(viceId, UUID.fromString(userId.toString()));
+      ViceResponseDTO result = this.getViceInformationsUseCase.execute(viceId, UUID.fromString(userId.toString()));
 
       return ResponseEntity.ok().body(result);
     } catch (Exception e) {
@@ -82,7 +84,7 @@ public class ViceController {
       var userId = request.getAttribute("user_id");
       viceEntity.setUserId(UUID.fromString(userId.toString()));
 
-      ViceListResponseDTO result = this.createViceUseCase.execute(viceEntity);
+      ViceSummaryListResponseDTO result = this.createViceUseCase.execute(viceEntity);
       return ResponseEntity.ok().body(result.getAllUserVices());
     } catch (Exception e) {
       return ResponseEntity.badRequest().body(e.getMessage());

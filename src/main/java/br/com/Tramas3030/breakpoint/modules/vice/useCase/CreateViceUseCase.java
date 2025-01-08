@@ -1,8 +1,9 @@
 package br.com.Tramas3030.breakpoint.modules.vice.useCase;
 
 import br.com.Tramas3030.breakpoint.exceptions.ViceFoundException;
-import br.com.Tramas3030.breakpoint.modules.vice.dto.ViceListResponseDTO;
-import br.com.Tramas3030.breakpoint.modules.vice.dto.ViceSummaryResponseDTO;
+import br.com.Tramas3030.breakpoint.modules.vice.dto.ViceResponseDTO;
+import br.com.Tramas3030.breakpoint.modules.vice.dto.ViceSummaryListResponseDTO;
+import br.com.Tramas3030.breakpoint.modules.vice.dto.ViceSummaryDTO;
 import br.com.Tramas3030.breakpoint.modules.vice.entities.ViceEntity;
 import br.com.Tramas3030.breakpoint.modules.vice.repository.ViceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +17,7 @@ public class CreateViceUseCase {
   @Autowired
   private ViceRepository viceRepository;
 
-  public ViceListResponseDTO execute(ViceEntity viceEntity) {
+  public ViceSummaryListResponseDTO execute(ViceEntity viceEntity) {
     this.viceRepository.findByTitleAndUserId(viceEntity.getTitle(), viceEntity.getUserId()).ifPresent(vice -> {
       throw new ViceFoundException();
     });
@@ -25,20 +26,16 @@ public class CreateViceUseCase {
 
     List<ViceEntity> allUserVices = this.viceRepository.findAllByUserIdOrderByCreatedAtDesc(viceEntity.getUserId());
 
-    List<ViceSummaryResponseDTO> viceSummaryList = allUserVices.stream()
-        .map(vice -> ViceSummaryResponseDTO.builder()
+    List<ViceSummaryDTO> viceSummaryList = allUserVices.stream()
+        .map(vice -> ViceSummaryDTO.builder()
             .id(vice.getId())
             .title(vice.getTitle())
-            .description(vice.getDescription())
-            .addictionImpact(vice.getAddictionImpact())
-            .impactCost(vice.getImpactCost())
-            .criticalHours(vice.getCriticalHours())
             .createdAt(vice.getCreatedAt())
             .updatedAt(vice.getUpdated_at())
             .build())
         .toList();
 
-    return ViceListResponseDTO.builder()
+    return ViceSummaryListResponseDTO.builder()
         .allUserVices(viceSummaryList)
         .build();
   }

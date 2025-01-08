@@ -1,8 +1,5 @@
 package br.com.Tramas3030.breakpoint.modules.vice.dto;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.ElementCollection;
-import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,7 +12,7 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class ViceSummaryResponseDTO {
+public class ViceResponseDTO {
 
   private long id;
   private String title;
