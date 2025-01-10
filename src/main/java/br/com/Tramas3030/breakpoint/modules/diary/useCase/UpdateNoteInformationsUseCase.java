@@ -8,7 +8,6 @@ import br.com.Tramas3030.breakpoint.modules.diary.dto.DiaryInformationsSummaryDT
 import br.com.Tramas3030.breakpoint.modules.diary.dto.UpdateDiaryDTO;
 import br.com.Tramas3030.breakpoint.modules.diary.entities.DiaryEntity;
 import br.com.Tramas3030.breakpoint.modules.diary.repository.DiaryRepository;
-import br.com.Tramas3030.breakpoint.modules.vice.entities.ViceEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

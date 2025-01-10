@@ -1,6 +1,7 @@
 package br.com.Tramas3030.breakpoint.modules.user.useCase;
 
 import br.com.Tramas3030.breakpoint.exceptions.*;
+import br.com.Tramas3030.breakpoint.modules.user.dto.UpdateUserResponseDTO;
 import br.com.Tramas3030.breakpoint.modules.user.entities.UserEntity;
 import br.com.Tramas3030.breakpoint.modules.user.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,7 @@ public class UpdateUserInformationsUseCase {
   @Autowired
   private PasswordEncoder passwordEncoder;
 
-  public UserEntity execute(UUID userId, UserEntity updateData) {
+  public UpdateUserResponseDTO execute(UUID userId, UserEntity updateData) {
     Optional<UserEntity> userEntity = this.userRepository.findById(userId);
 
     if(userEntity.isEmpty()) {
@@ -59,6 +60,13 @@ public class UpdateUserInformationsUseCase {
       user.setPassword(updatedPasswordEncrypted);
     }
 
-    return userRepository.save(user);
+    userRepository.save(user);
+
+    return UpdateUserResponseDTO.builder()
+        .name(user.getName())
+        .email(user.getEmail())
+        .createdAt(user.getCreatedAt())
+        .updatedAt(user.getUpdatedAt())
+        .build();
   }
 }

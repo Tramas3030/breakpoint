@@ -1,9 +1,6 @@
 package br.com.Tramas3030.breakpoint.modules.vice.controllers;
 
-import br.com.Tramas3030.breakpoint.modules.vice.dto.ViceResponseDTO;
-import br.com.Tramas3030.breakpoint.modules.vice.dto.ViceSummaryListResponseDTO;
-import br.com.Tramas3030.breakpoint.modules.vice.dto.ViceSummaryDTO;
-import br.com.Tramas3030.breakpoint.modules.vice.dto.ViceUpdatedAt;
+import br.com.Tramas3030.breakpoint.modules.vice.dto.*;
 import br.com.Tramas3030.breakpoint.modules.vice.entities.ViceEntity;
 import br.com.Tramas3030.breakpoint.modules.vice.useCase.*;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -39,6 +36,9 @@ public class ViceController {
   @Autowired
   private ResetViceTimerUseCase resetViceTimerUseCase;
 
+  @Autowired
+  private UpdateViceInformationsUseCase updateViceInformationsUseCase;
+
   @GetMapping("/")
   public ResponseEntity<Object> listAllUserVices(HttpServletRequest request) {
     var userId = request.getAttribute("user_id");
@@ -65,12 +65,25 @@ public class ViceController {
     }
   }
 
-  @PutMapping("/{viceId}")
+  @PutMapping("/{viceId}/reset")
   public ResponseEntity<Object> resetViceTimer(@PathVariable Long viceId, HttpServletRequest request) {
     var userId = request.getAttribute("user_id");
 
     try {
       ViceUpdatedAt result = this.resetViceTimerUseCase.execute(viceId, UUID.fromString(userId.toString()));
+
+      return ResponseEntity.ok().body(result);
+    } catch (Exception e) {
+      return ResponseEntity.badRequest().body(e.getMessage());
+    }
+  }
+
+  @PutMapping("/{viceId}/update")
+  public ResponseEntity<Object> changeViceInformations(@PathVariable Long viceId, HttpServletRequest request, @RequestBody UpdateViceDTO updateViceDTO) {
+    var userId = request.getAttribute("user_id");
+
+    try {
+      ViceResponseDTO result = this.updateViceInformationsUseCase.execute(viceId, UUID.fromString(userId.toString()), updateViceDTO);
 
       return ResponseEntity.ok().body(result);
     } catch (Exception e) {

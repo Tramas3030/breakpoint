@@ -33,7 +33,7 @@ public class AuthUserUseCase {
     var passwordMatches = this.passwordEncoder.matches(authUserDTO.getPassword(), user.getPassword());
 
     if (!passwordMatches) {
-      throw new BadCredentialsException("Senha inválida");
+      throw new BadCredentialsException("Invalid password");
     }
 
     Algorithm algorithm = Algorithm.HMAC256(secretKey);
