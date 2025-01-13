@@ -22,6 +22,8 @@ public class CreateViceUseCase {
       throw new ViceFoundException();
     });
 
+    viceEntity.setReseted(false);
+
     this.viceRepository.save(viceEntity);
 
     List<ViceEntity> allUserVices = this.viceRepository.findAllByUserIdOrderByCreatedAtDesc(viceEntity.getUserId());
@@ -32,6 +34,7 @@ public class CreateViceUseCase {
             .title(vice.getTitle())
             .createdAt(vice.getCreatedAt())
             .updatedAt(vice.getUpdated_at())
+            .reseted(vice.isReseted())
             .build())
         .toList();
 

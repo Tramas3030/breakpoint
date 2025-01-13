@@ -27,11 +27,13 @@ public class ResetViceTimerUseCase {
     ViceEntity vice = viceEntity.get();
 
     vice.setUpdated_at(LocalDateTime.now());
+    vice.setReseted(true);
 
     viceRepository.save(vice);
 
     return ViceUpdatedAt.builder()
         .updatedAt(vice.getUpdated_at())
+        .reseted(vice.isReseted())
         .build();
   }
 

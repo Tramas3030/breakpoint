@@ -17,5 +17,6 @@ public class ViceSummaryDTO {
   private String title;
   private LocalDateTime createdAt;
   private LocalDateTime updatedAt;
+  private boolean reseted;
 
 }

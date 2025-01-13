@@ -77,6 +77,7 @@ public class UpdateViceInformationsUseCase {
         .criticalHours(vice.getCriticalHours())
         .createdAt(vice.getCreatedAt())
         .updatedAt(vice.getUpdated_at())
+        .reseted(vice.isReseted())
         .build();
   }
 

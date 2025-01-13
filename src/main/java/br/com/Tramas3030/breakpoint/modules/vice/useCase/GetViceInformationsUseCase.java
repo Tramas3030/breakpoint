@@ -35,6 +35,7 @@ public class GetViceInformationsUseCase {
         .criticalHours(entity.getCriticalHours())
         .createdAt(entity.getCreatedAt())
         .updatedAt(entity.getUpdated_at())
+        .reseted(entity.isReseted())
         .build();
   }
 }

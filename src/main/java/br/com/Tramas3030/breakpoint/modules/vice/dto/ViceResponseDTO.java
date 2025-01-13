@@ -20,6 +20,7 @@ public class ViceResponseDTO {
   private String addictionImpact;
   private String impactCost;
   private List<String> criticalHours;
+  private boolean reseted;
   private LocalDateTime createdAt;
   private LocalDateTime updatedAt;
 

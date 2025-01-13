@@ -14,6 +14,6 @@ import java.time.LocalDateTime;
 public class ViceUpdatedAt {
 
   private LocalDateTime updatedAt;
-
+  private boolean reseted;
 
 }

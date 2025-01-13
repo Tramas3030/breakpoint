@@ -25,6 +25,7 @@ public class GetAllVicesUseCase {
             .title(vice.getTitle())
             .createdAt(vice.getCreatedAt())
             .updatedAt(vice.getUpdated_at())
+            .reseted(vice.isReseted())
             .build())
         .toList();
 

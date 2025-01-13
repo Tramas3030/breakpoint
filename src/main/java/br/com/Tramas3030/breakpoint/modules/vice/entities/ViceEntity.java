@@ -35,6 +35,8 @@ public class ViceEntity {
   @Column(name = "critical_hours")
   private List<String> criticalHours;
 
+  private boolean reseted;
+
   @ManyToOne()
   @JoinColumn(name = "user_id", nullable = false, insertable = false, updatable = false)
   private UserEntity userEntity;
