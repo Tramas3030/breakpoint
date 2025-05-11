@@ -2,6 +2,7 @@ package br.com.Tramas3030.breakpoint.modules.diary.entities;
 
 import br.com.Tramas3030.breakpoint.modules.user.entities.UserEntity;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
@@ -17,6 +18,7 @@ public class DiaryEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Schema(hidden = true)
   private long id;
 
   @NotBlank(message = "O campo [title] não pode ser vazio")
@@ -29,19 +31,23 @@ public class DiaryEntity {
 
   @ManyToOne()
   @JoinColumn(name = "user_id", nullable = false, insertable = false, updatable = false)
+  @Schema(hidden = true)
   private UserEntity userEntity;
 
   @Column(name = "user_id", nullable = false)
+  @Schema(hidden = true)
   private UUID userId;
 
   @Column(name = "created_at")
   @CreationTimestamp
   @JsonFormat(pattern = "dd/MM/yyyy HH:mm")
+  @Schema(hidden = true)
   private LocalDateTime createdAt;
 
   @Column(name = "updated_at")
   @UpdateTimestamp
   @JsonFormat(pattern = "dd/MM/yyyy HH:mm")
+  @Schema(hidden = true)
   private LocalDateTime updated_at;
 
 }
