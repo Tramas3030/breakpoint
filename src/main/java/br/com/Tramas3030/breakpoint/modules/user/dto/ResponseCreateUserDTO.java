@@ -20,8 +20,6 @@ public class ResponseCreateUserDTO {
   private String name;
   @Schema(example = "simonesimons@gmail.com")
   private String email;
-  @Schema(example = "$2a$10$OaYbUinP0n41Zds.Z1BS1umJpvTwHprNpMZh41BeJHM2gVwsrEYF2")
-  private String password;
   private LocalDateTime createdAt;
 
 }

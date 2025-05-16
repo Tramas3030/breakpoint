@@ -1,6 +1,7 @@
 package br.com.Tramas3030.breakpoint.docs;
 
 import br.com.Tramas3030.breakpoint.exceptions.ErrorMessageDTO;
+import br.com.Tramas3030.breakpoint.modules.user.dto.CreateUserDTO;
 import br.com.Tramas3030.breakpoint.modules.user.dto.ResponseCreateUserDTO;
 import br.com.Tramas3030.breakpoint.modules.user.dto.UpdateUserResponseDTO;
 import br.com.Tramas3030.breakpoint.modules.user.dto.UserInformationsDTO;
@@ -56,7 +57,7 @@ public interface UserControllerDocs {
                     }
             )
     })
-    ResponseEntity<Object> create(@Valid @RequestBody UserEntity userEntity);
+    ResponseEntity<Object> create(@Valid @RequestBody CreateUserDTO createUserDTO);
 
     @Operation(summary = "Obter as informações de um usuário", description = "Esse método é responsável por obter as informações de um usuário cadastrado na aplicação")
     @ApiResponses({

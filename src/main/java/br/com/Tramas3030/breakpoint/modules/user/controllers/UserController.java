@@ -1,6 +1,7 @@
 package br.com.Tramas3030.breakpoint.modules.user.controllers;
 
 import br.com.Tramas3030.breakpoint.docs.UserControllerDocs;
+import br.com.Tramas3030.breakpoint.modules.user.dto.CreateUserDTO;
 import br.com.Tramas3030.breakpoint.modules.user.entities.UserEntity;
 import br.com.Tramas3030.breakpoint.modules.user.useCase.CreateUserUseCase;
 import br.com.Tramas3030.breakpoint.modules.user.useCase.DeleteUserUseCase;
@@ -31,9 +32,9 @@ public class UserController implements UserControllerDocs {
   private DeleteUserUseCase deleteUserUseCase;
 
   @PostMapping("/")
-  public ResponseEntity<Object> create(@Valid @RequestBody UserEntity userEntity) {
+  public ResponseEntity<Object> create(@Valid @RequestBody CreateUserDTO createUserDTO) {
     try {
-      var result = createUserUseCase.execute(userEntity);
+      var result = createUserUseCase.execute(createUserDTO);
       return ResponseEntity.ok().body(result);
     } catch (Exception e) {
       return ResponseEntity.badRequest().body(e.getMessage());
